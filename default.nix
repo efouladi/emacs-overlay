@@ -104,6 +104,20 @@ in {
     name = "${oa.name}-nox";
   }));
 
+  emacsGccPureGTK = let
+    repoMeta = super.lib.importJSON ./repos/emacs/emacs-feature_native-comp-pure-gtk.json;
+  in emacsGcc.overrideAttrs(old: {
+    name = "emacs-gcc-pure-gtk-${repoMeta.version}";
+    inherit (repoMeta) version;
+    src = super.fetchFromGitHub {
+      owner = "efouladi";
+      repo = "emacs";
+      inherit (repoMeta) sha256 rev;
+    };
+
+    configureFlags = old.configureFlags ++ [ "--with-nativecomp" "--without-x" "--with-cairo" "--with-modules" ];
+  });
+
   emacsWithPackagesFromUsePackage = import ./elisp.nix { pkgs = self; };
 
   emacsPackagesFor = emacs: (
