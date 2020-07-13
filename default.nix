@@ -115,7 +115,7 @@ in {
       inherit (repoMeta) sha256 rev;
     };
 
-    configureFlags = old.configureFlags ++ [ "--with-nativecomp" "--without-x" "--with-cairo" "--with-modules" ];
+    configureFlags = old.configureFlags ++ [ "--with-nativecomp" "--with-pgtk" "--with-cairo" "--with-modules" ];
   });
 
   emacsWithPackagesFromUsePackage = import ./elisp.nix { pkgs = self; };
